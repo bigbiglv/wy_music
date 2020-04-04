@@ -1,13 +1,13 @@
 <template>
   <div class="about">
-    <NavBar></NavBar>
+    <!-- <NavBar></NavBar> -->
     <div class="app">
       <h1>这里是about</h1>
     </div>
   </div>
 </template>
 <script>
-import NavBar from "@/components/NavBar.vue";
+// import NavBar from "@/components/NavBar.vue";
 
 export default {
   name: "About",
@@ -16,7 +16,7 @@ export default {
     }
   },
   components: {
-    NavBar
+    // NavBar
   }
 };
 </script>

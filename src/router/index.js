@@ -9,9 +9,7 @@ const routes = [
     name: "Home",
     meta:{
       pageMsg:{
-        tabbar:true,  //tabbar是否加载
-        page_title: "首页", //NavBar标题
-        page_search: true //是否显示search
+        page_title: "首页" //NavBar标题
       }
     },
     component: Home
@@ -21,9 +19,7 @@ const routes = [
     name: "About",
     meta:{
       pageMsg:{
-        tabbar:true,
-        page_title: "about",
-        page_search: false
+        page_title: "about"
       }
     },
     // route level code-splitting
@@ -37,7 +33,7 @@ const routes = [
     name:"Test", 
     meta:{
       pageMsg:{
-        tabbar:true
+
       }
     },
     // component: () => import("../view/Test.vue")
@@ -49,8 +45,7 @@ const routes = [
     name:"Search", 
     meta:{
       pageMsg:{
-        page_title:null,
-        page_search:true
+        page_title:null  
       }
     },
     component: resolve => require(['../views/Search.vue'], resolve)
@@ -60,9 +55,7 @@ const routes = [
     name:"Mine", 
     meta:{
       pageMsg:{
-        tabbar:true,
-        page_title:'我的',
-        page_search:false
+        page_title:"我的音乐"    
       }
     },
     component: resolve => require(['../views/Mine.vue'], resolve)

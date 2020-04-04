@@ -4,41 +4,50 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div> -->
-    <!-- <NavBar  v-if="$route.meta.keepAlive" v-bind:msg=this.$options.name></NavBar> -->
+    <NavBar v-if="navShow"></NavBar>
     <transition mode="out-in" name="slideright">
-      <router-view />
+      <router-view class="app-views"/>
     </transition>
     <!-- v-if判断组件是否需要加载 -->
-    <TabBar  v-if="tabShow" ></TabBar>
+    <TabBar v-if="tabShow" ></TabBar>
   </div>
 </template>
 
 <script>
 import TabBar from "@/components/TabBar.vue";
-// import NavBar from "@/components/NavBar.vue";
+import NavBar from "@/components/NavBar.vue";
 export default {
   name: "Home",
   data(){
     return{
-      tabShow: true
+      tabShow: true, //判断是否加载底栏
+      navShow: true,  //判断是否加载顶栏
+      value:""
     }
   },
   components: {
     TabBar,
-    // NavBar
+    NavBar
   },
   methods:{
+    
   },
   created(){
   },
   watch:{
     '$route' (){ 
-      //监听路由路径判断是否加载TabbBar
+      //监听路由路径判断是否加载TabbBar和NavBar
       if(this.$route.path=="/" || this.$route.path=="/about" || 
          this.$route.path=="/test" ||this.$route.path=="/mine"){
-        this.tabShow=true
-        }else{
-        this.tabShow=false
+          this.tabShow=true;
+          this.navShow=true;
+        }else if(this.$route.path=="/search"){
+          this.tabShow=false;
+          this.navShow=true;
+        }
+        else{
+          this.tabShow=false;
+          this.navShow=false;
         }
     }
   }
@@ -49,7 +58,7 @@ export default {
 *{
   margin: 0;
   padding: 0;
-  .app{
+  .app-views{
     position: relative;
     top: 60px;
   }

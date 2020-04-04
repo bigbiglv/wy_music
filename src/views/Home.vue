@@ -1,16 +1,20 @@
 <template>
   <div class="home">
-    <NavBar></NavBar>
     <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-    <div class="app">
       <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-        <van-swipe-item>1</van-swipe-item>
-        <van-swipe-item>2</van-swipe-item>
-        <van-swipe-item>3</van-swipe-item>
-        <van-swipe-item>4</van-swipe-item>
+        <van-swipe-item v-for="(item,index) in banners" :key="index">
+          <van-image width="100%" lazy-load :src="item.imageUrl">
+            <!-- 加载中提示 -->
+            <template v-slot:loading>
+              <!-- <van-loading type="spinner" size="20" /> -->
+            </template>
+            <!-- 加载失败提示 -->
+            <template v-slot:error>加载失败</template>
+          </van-image>
+        </van-swipe-item>
       </van-swipe>
-      <p>{{s1}}</p>
+
       <router-link to="test1" tag="h1">test1</router-link>
       <h1>我是home</h1> 
       <h1>我是home</h1> 
@@ -31,39 +35,39 @@
       <h1>我是home</h1> 
       <h1>我是home</h1> 
       <h1>我是home</h1> 
-    </div>
-    <!-- <TabBar></TabBar> -->
   </div>
 </template>
 <script>
 // @ is an alias to /src
-import NavBar from "@/components/NavBar.vue";
+// import NavBar from "@/components/NavBar.vue";
 export default {
   name: "Home",
   data(){
     return{
-      s1:this.$route.meta.pageMsg.tabbar
+      banners:[],
+      arr:[{id:0,text:"我是1"},{id:2,text:"我是2"}]
     }
   },
   methods:{
+    //获取轮播图数据
+    getBanner(){
+      var url="http://localhost:3000/banner";
+				this.axios(url).then(result=>{
+          this.banners=result.data.banners;
+				});
+    }
   },
-  components: {
-    // HelloWorld,
-    // TabBar,
-    NavBar
+  created(){
+    this.getBanner()
   }
 };
 </script>
 <style lang="scss" scoped>
   .home{
-    .app{
-      .my-swipe .van-swipe-item {
-        color: #fff;
-        font-size: 20px;
-        line-height: 150px;
-        text-align: center;
-        background-color: #39a9ed;
-      }
+    .my-swipe{
+      width: 100%;
+      height: 140px;
+      border-radius: 5px;
     }
   }
 </style>
