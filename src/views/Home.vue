@@ -52,9 +52,9 @@ export default {
     //获取轮播图数据
     getBanner(){
       var url="http://localhost:3000/banner";
-				this.axios(url).then(result=>{
-          this.banners=result.data.banners;
-				});
+			this.axios(url).then(result=>{
+        this.banners=result.data.banners;
+			});
     }
   },
   created(){

@@ -3,6 +3,9 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
+import eventBus from './eventBus' 
+Vue.prototype.$eventBus = eventBus;
+
 //引入axios
 import axios from "axios"
 //配置跨域访问选项

@@ -46,10 +46,10 @@ export default {
 		isShow1(){
 			console.log(this.value);
 		},
-		//按下键盘的回车就把输入的内容传值到search开始搜索
+		//按下键盘的回车就把输入的内容传值到bus开始搜索
 		onSearch(){
-			console.log(this.value);
-			
+			console.log(this.value); 
+			this.$eventBus.emit("searchMsg",this.value) 
 		}
 		
 
