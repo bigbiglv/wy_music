@@ -1,15 +1,24 @@
 <template>
-  <div class="about">
-    <button @click="gettype(1)">男</button> 
-    <button @click="gettype(2)">女</button> 
-    <button @click="gettype(3)">乐队</button> 
-    {{type}}
-    <div v-for="(item,index) in artistList" :key="index">
-      <p>{{item.name}}</p>
-    </div>
-
-    <van-index-bar >
-      <van-index-anchor index="A"/>
+  <!-- <router-view></router-view> -->
+  	<van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+    >
+  <div class="test">
+	
+		
+		<div v-for="(item,index) in artistList" :key="index">
+			<p>
+				{{index+1}}	
+				{{item.name}}
+			</p>
+			<img :src="item.img1v1Url"  width="50" height="50"  v-lazy="item.img1v1Url">
+		</div>
+		
+		<!-- <van-index-bar>
+      <van-index-anchor index="A" />
       <van-cell title="文本" />
       <van-cell title="文本" />
       <van-cell title="文本" />
@@ -138,31 +147,32 @@
       <van-cell title="文本" />
       <van-cell title="文本" />
       <van-cell title="文本" />
-    </van-index-bar>
-  </div>
+    </van-index-bar> -->
+	</div>
+</van-list>
 </template>
 <script>
 import Vue from 'vue';
-import { IndexBar, IndexAnchor } from 'vant';
+import { List } from 'vant';
 
-Vue.use(IndexBar);
-Vue.use(IndexAnchor);
+Vue.use(List);
 export default {
-  name: "About",
+	name: "Artist",
   data(){
-    return{
-      artistList:[],  //存放歌手的数组
-			limit:100,   		//显示的数据数量
+    return{  
+			artistList:[],  //存放歌手的数组
+			limit:10,   		//显示的数据数量
       offset:0,   			//开始显示的地方
-      initial:"A",
-      type:1
+      initial:"A",    //index索引
+      area:-1,        //语种分类
+        //是否刷新错误
+      loading: false,  //是否下拉刷新
+      finished: false  
     }
-  },
-  components: {
-  },
-  methods:{
-    getArtist(){
-      var url=`http://localhost:3000/artist/list?limit=${this.limit}&offset=${this.offset}&initial=${this.initial}&type=${this.type}`;
+	},
+	methods:{
+		getArtist(){
+			var url=`http://localhost:3000/artist/list?limit=${this.limit}&offset=${this.offset}&initial=${this.initial}&area=${this.area}`;
 			this.axios(url).then(result=>{
 				if(result.status==200){
 					this.artistList.push(...result.data.artists);
@@ -170,15 +180,33 @@ export default {
 				}
 			});
     },
-    gettype(value){
-      this.type=value;
-			this.offset+=10;
-
-      this.getArtist()
+    //触底刷新数据
+    onLoad() {
+      // 异步更新数据
+      setTimeout(() => {
+        this.offset+=10;
+			  this.getArtist();
+        // 加载状态结束
+        this.loading = false;
+        // 数据全部加载完成
+        if (this.artistList.length >= 60) {
+          this.finished = true;
+        }
+      }, 1000);
     }
-  }
+	},
+	created(){
+		this.getArtist();
+	},
+	watch:{
+	},
+	computed:{
+	}
 };
 </script>
-<style lang="scss" scoped>
 
+<style scoped>
+	.test{
+		background-color: #fff;
+	}
 </style>

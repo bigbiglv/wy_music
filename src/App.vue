@@ -36,9 +36,9 @@ export default {
   },
   watch:{
     '$route' (){ 
-      //监听路由路径判断是否加载TabbBar和NavBar
+      //监听路由路径判断是否加载TabbBar和 NavBar
       if(this.$route.path=="/" || this.$route.path=="/about" || 
-         this.$route.path=="/test" ||this.$route.path=="/mine"){
+         this.$route.path=="/artist" ||this.$route.path=="/mine"){
           this.tabShow=true;
           this.navShow=true;
         }else if(this.$route.path=="/search"){
@@ -60,7 +60,10 @@ export default {
   padding: 0;
   .app-views{
     position: relative;
-    top: 60px;
+    width: 96%;
+    left:2%;
+    top: 65px;
+    padding-bottom: 50px;
   }
   #app{
     .slideright-enter-active, .slideright-leave-active{

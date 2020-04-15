@@ -1,7 +1,7 @@
 <template>
 	<div class="nav" @click="isShow1">
 		<transition name="title_change">
-			<p v-if="isSearch">{{title}}</p>
+			<p class="nav_title" v-if="isSearch">{{title}}</p>
 		</transition>
 		<transition name="search_change">
 			<van-search 
@@ -18,7 +18,7 @@
 				/>
 		</transition>
 		<transition name="back_change">
-			<div class="cancle" v-if="!isSearch" @click="goBack"> 取消 </div>
+			<div class="nav_cancle" v-if="!isSearch" @click="goBack"> 取消 </div>
 		</transition>
   </div>
 </template>
@@ -28,9 +28,9 @@ export default {
 	name:'Navbar',
 	data(){
 		return{
-			value:"",
-			title:"首页",
-			isSearch: true
+			value:"",       	//搜索框输入的数据
+			title:"首页",    	//左上角标题
+			isSearch: true    //是否显示搜索框
 		}
 	},
 	methods:{
@@ -46,7 +46,7 @@ export default {
 		isShow1(){
 			console.log(this.value);
 		},
-		//按下键盘的回车就把输入的内容传值到bus开始搜索
+		//按下键盘的回车就把输入的内容传值到bus再传到serach组件开始搜索
 		onSearch(){
 			console.log(this.value); 
 			this.$eventBus.emit("searchMsg",this.value) 
@@ -108,16 +108,18 @@ export default {
 		opacity: .5;
     transform: translateX(40px);
   }
-	p{
+	.nav_title{
+		display: block;
 		flex-grow: 1;
 		padding-left: 10px;
 		font-weight: 600;
-	}
-	.cancle{
+	} 
+	.nav_cancle{
+		display: block;
 		flex-grow: 1;
-		padding-left: 10px;
+		padding-right: 10px;
 		font-weight: 600;
-	}
-	
+		text-align: center;
+	} 
 }
 </style>

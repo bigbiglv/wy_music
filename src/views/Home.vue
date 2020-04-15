@@ -1,10 +1,11 @@
 <template>
   <div class="home">
+    
     <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
       <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-        <van-swipe-item v-for="(item,index) in banners" :key="index">
-          <van-image width="100%" lazy-load :src="item.imageUrl">
+        <van-swipe-item v-for="(item,index) in banners" :key="index" v-lazy="item">
+          <van-image :src="item.imageUrl">
             <!-- 加载中提示 -->
             <template v-slot:loading>
               <!-- <van-loading type="spinner" size="20" /> -->
@@ -40,6 +41,10 @@
 <script>
 // @ is an alias to /src
 // import NavBar from "@/components/NavBar.vue";
+import Vue from 'vue';
+import { PullRefresh } from 'vant';
+
+Vue.use(PullRefresh);
 export default {
   name: "Home",
   data(){
@@ -53,7 +58,7 @@ export default {
     getBanner(){
       var url="http://localhost:3000/banner";
 			this.axios(url).then(result=>{
-        this.banners=result.data.banners;
+        this.banners=result.data.banners.slice(0,5);  //页面简洁只显示前5个图片
 			});
     }
   },
@@ -65,8 +70,8 @@ export default {
 <style lang="scss" scoped>
   .home{
     .my-swipe{
-      width: 100%;
-      height: 140px;
+      // width: 100%;
+      // height: 140px;
       border-radius: 5px;
     }
   }

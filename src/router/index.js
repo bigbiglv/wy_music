@@ -29,16 +29,16 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue")
   },
   {
-    path:"/test", 
-    name:"Test", 
+    path:"/artist", 
+    name:"Artist", 
     meta:{
       pageMsg:{
-
+        page_title:"歌手 "  
       }
     },
     // component: () => import("../view/Test.vue")
     // component:Test
-    component: resolve => require(['../views/Test.vue'], resolve)
+    component: resolve => require(['../views/Artist.vue'], resolve)
   },
   {
     path:"/search", 
