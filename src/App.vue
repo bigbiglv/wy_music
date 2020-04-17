@@ -5,9 +5,7 @@
       <router-link to="/about">About</router-link>
     </div> -->
     <NavBar v-if="navShow"></NavBar>
-    <transition mode="out-in" name="slideright">
       <router-view class="app-views"/>
-    </transition>
     <!-- v-if判断组件是否需要加载 -->
     <TabBar v-if="tabShow" ></TabBar>
   </div>
@@ -64,14 +62,6 @@ export default {
     left:2%;
     top: 65px;
     padding-bottom: 50px;
-  }
-  #app{
-    .slideright-enter-active, .slideright-leave-active{
-      transition: all 0.1s;
-    }
-    .slideright-enter, .slideright-leave-to{
-      opacity: 0.4;
-    }
   }
 }
 

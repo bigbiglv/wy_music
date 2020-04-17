@@ -82,6 +82,8 @@ export default {
 	justify-content: space-around;
 	z-index: 100;
 	
+	//标题动画
+
 	.title_change-enter-active, .title_change-leave-active {
     transition: all 0.2s;
 		transition-timing-function: linear;
@@ -90,6 +92,7 @@ export default {
 		opacity: .5;
     transform: translateX(-40px);
   }
+
 	//搜索框动画
 	.search_change-enter-active, .search_change-leave-active {
     transition: all 0.1s;

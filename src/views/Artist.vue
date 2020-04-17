@@ -1,14 +1,27 @@
 <template>
   <!-- <router-view></router-view> -->
-  	<van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
+  <!-- <van-list
+    v-model="loading"
+    :finished="finished"
+    finished-text="没有更多了"
+     @load="onLoad"
+  > -->
   <div class="test">
-	
+	  <!-- 按钮 -->
+    <div>
+      <input type="radio" name="lll" value="0" checked class="button" id="all" @click="setType(A)"/>
+        <label for="all">全部</label> 
+		  <input type="radio" name="lll" value="1"  class="button" id="man" @click="setType('B')"/>
+        <label for="man">男歌手</label>
+		  <input type="radio" name="lll" value="2"  class="button" id="woman" @click="setType(C)"/>
+        <label for="woman">女歌手</label>
+		  <input type="radio" name="lll" value="3"  class="button" id="team" @click="setType(D)"/>
+        <label for="team">乐队</label>
+    </div>
+    {{initial}}
+
 		
+
 		<div v-for="(item,index) in artistList" :key="index">
 			<p>
 				{{index+1}}	
@@ -149,7 +162,7 @@
       <van-cell title="文本" />
     </van-index-bar> -->
 	</div>
-</van-list>
+<!-- </van-list> -->
 </template>
 <script>
 import Vue from 'vue';
@@ -167,15 +180,17 @@ export default {
       area:-1,        //语种分类
         //是否刷新错误
       loading: false,  //是否下拉刷新
-      finished: false  
+      finished: false,
+      type:"2"
     }
 	},
 	methods:{
 		getArtist(){
-			var url=`http://localhost:3000/artist/list?limit=${this.limit}&offset=${this.offset}&initial=${this.initial}&area=${this.area}`;
+			var url=`http://localhost:3000/artist/list?limit=${this.limit}&offset=${this.offset}&initial=${this.initial}&area=${this.type}&type=${this.type}`;
 			this.axios(url).then(result=>{
 				if(result.status==200){
-					this.artistList.push(...result.data.artists);
+					// this.artistList.push(...result.data.artists);
+					this.artistList=result.data.artists;
 					console.log(result)
 				}
 			});
@@ -185,14 +200,28 @@ export default {
       // 异步更新数据
       setTimeout(() => {
         this.offset+=10;
-			  this.getArtist();
+        // this.getArtist();
+        var url=`http://localhost:3000/artist/list?limit=${this.limit}&offset=${this.offset}&initial=${this.initial}}`;
+			this.axios(url).then(result=>{
+				if(result.status==200){
+					this.artistList.push(...result.data.artists);
+					// this.artistList=result.data.artists;
+					console.log(result)
+				}
+			});
         // 加载状态结束
         this.loading = false;
         // 数据全部加载完成
-        if (this.artistList.length >= 60) {
+        if (this.artistList.length >= 600) {
           this.finished = true;
         }
       }, 1000);
+    },
+    setType(val){
+      this.initial=val;
+      console.log(val)
+      this.getArtist();
+
     }
 	},
 	created(){
@@ -205,8 +234,19 @@ export default {
 };
 </script>
 
-<style scoped>
-	.test{
-		background-color: #fff;
-	}
+<style lang="scss" scoped>
+  .artist{
+    .button{
+      padding: 15px 20px 15px 20px;
+      display: inline-block;
+      background-color: #fff;
+      text-align: center;
+      border: solid 1px #333 ;
+      border-radius: 50px;
+    }
+    .button--active{
+        background-color: pink;
+    }
+    
+  }
 </style>
