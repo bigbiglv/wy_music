@@ -9,7 +9,7 @@
 				background="#ececec" 
 				style="flex-grow: 10;"
 				shape="round"
-				maxlength=10
+				maxlength=30
 				input-align="center"
 				v-model="value" 
 				v-if="this.$route.path=='/search' || this.$route.path=='/'"
@@ -49,7 +49,7 @@ export default {
 		//按下键盘的回车就把输入的内容传值到bus再传到serach组件开始搜索
 		onSearch(){
 			console.log(this.value); 
-			this.$eventBus.emit("searchMsg",this.value) 
+			this.$eventBus.emit("Msg",this.value) 
 		}
 		
 
